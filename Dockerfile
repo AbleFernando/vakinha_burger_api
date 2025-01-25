@@ -8,6 +8,7 @@ RUN dart pub get
 
 # Copy app source code (except anything in .dockerignore) and AOT compile app.
 COPY . .
+COPY images/ /app/images/  # Copia o diretório "images" para o contêiner
 RUN dart compile exe bin/server.dart -o bin/server
 
 # Build minimal serving image from AOT-compiled `/server`
@@ -15,6 +16,7 @@ RUN dart compile exe bin/server.dart -o bin/server
 FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/server /app/bin/
+COPY --from=build /app/images /app/images/  # Inclui as imagens no contêiner final
 
 # Start server.
 EXPOSE 8080
