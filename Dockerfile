@@ -7,7 +7,7 @@ COPY pubspec.* ./
 RUN dart pub get
 
 # Copiar o diretório images para o contêiner (certifique-se de que as imagens existam)
-COPY ./images/ /app/images/  # Copia as imagens para o contêiner
+# COPY ./images/ /app/images/  # Copia as imagens para o contêiner
 
 # Copiar o código da aplicação e compilar AOT
 COPY . .
