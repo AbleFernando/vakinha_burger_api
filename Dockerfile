@@ -6,10 +6,10 @@ WORKDIR /app
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copia o diretório de imagens para o contêiner
-COPY ./images/ /app/images/
+# Copiar o diretório images para o contêiner (certifique-se de que as imagens existam)
+COPY ./images/ /app/images/  # Copia as imagens para o contêiner
 
-# Copia o código da aplicação e compila AOT
+# Copiar o código da aplicação e compilar AOT
 COPY . .
 RUN dart compile exe bin/server.dart -o bin/server
 
@@ -18,7 +18,9 @@ RUN dart compile exe bin/server.dart -o bin/server
 FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/server /app/bin/
-COPY --from=build /app/images /app/images/  # Inclui as imagens no contêiner final
+
+# Adiciona as imagens no contêiner final
+COPY --from=build /app/images /app/images/
 
 # Start server.
 EXPOSE 8080
