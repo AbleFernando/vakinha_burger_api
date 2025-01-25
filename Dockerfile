@@ -20,7 +20,7 @@ COPY --from=build /runtime/ /
 COPY --from=build /app/bin/server /app/bin/
 
 # Adiciona as imagens no contêiner final
-COPY --from=build /app/images /app/images/
+COPY --from=build /app/images /images/
 
 # Start server.
 EXPOSE 8080
